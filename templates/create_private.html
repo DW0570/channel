@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>{{channel_name}} </title>{% endblock %}
+
+{% block body %}
+
+  <div class="row justify-content-center">
+    <button style="color:#dc3545; font-size:30px" class="btn btn-primary" type="button">
+      <a style="color:white; font-size:30px" href="{{ url_for('private', channel_name=channel_name) }}">Go to talk privately <span class="badge">(:</span></a>
+    </button>
+  </div>
+
+{% endblock %}

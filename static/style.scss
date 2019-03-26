@@ -1,0 +1,244 @@
+
+$padding1:50px 0px 10px 0px;
+$padding2:50px 10px 10px 10px;
+$padding3:50px 10px 10px 0px;
+$color:white;
+$color1:#fbcdef;
+$color2:pink;
+$color3:purple;
+$color4:#dc3545;
+$width:400px;
+$height:300px;
+
+body{
+  background-image: url_for('static', filename='back.jpg');
+  background-color: teal; /* Used if the image is unavailable */
+  height: auto;; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+
+}
+
+#topp{
+  padding-top: 0px;
+  background-color:black;
+  background-size:cover;
+  text-align: center;
+  height: 50px;
+
+}
+
+#toppp{
+  padding-top: 20px;
+  padding-bottom: 90px;
+  background-size:cover;
+  height: 70px;
+
+  a {
+    text-align: center;
+    font-size: 20px;
+    color:black;
+    weight:10px;
+    width: 70px;
+    height:30px
+  }
+
+}
+
+#h3_{
+  text-align: center;
+  font-size: 30px;
+  weight:10px;
+  padding-bottom: 40px;
+  color: black !important;
+  text-decoration: none !important;
+}
+
+#h4_{
+
+  a{
+    text-align: center;
+    font-size: 15px;
+    weight:10px;
+    color: $color4 !important;
+    text-decoration: none !important;
+  }
+}
+
+.col-12 col-md-8{
+  border: 2px solid $color4;
+}
+
+#same{
+  display: none;
+}
+
+.backg{
+  background-color: $color1;
+  @media (min-width:500px){
+    h1::before{
+      content: "Welcome to my Webpage!"
+    }
+  }
+  @media (max-width:499px){
+    h1::before{
+      content: "Welcome!"
+    }
+  }
+}
+
+.h_01{
+  font-family: fantasy;
+  font-size: 70px;
+  color:red;
+  text-align: center;
+  padding-top:100px;
+  padding-bottom: 5px;
+
+}
+
+.p1
+{
+  text-align: center;
+  font-size: 35px;
+  font-family: sans-serif;
+  padding-top: 50px;
+  padding-bottom: 100px;
+  color:dark;
+}
+
+#p2
+{
+  text-align: center;
+  font-size: 35px;
+  font-family: sans-serif;
+  text-align: center;
+  color:green;
+}
+
+.div1{
+
+  h2{
+    text-align: center;
+    color:$color4;
+    font-size: 60px;
+    padding-bottom: 5px;
+  }
+
+  li{
+    color:blue;
+    font-size: 30px;
+  }
+
+  li>a{
+    color: $color !important;
+    text-decoration: none !important;
+    }
+}
+
+  %image_0{
+    height: $height;
+    width: $width;
+  }
+
+  .image_1 {
+    @extend %image_0;
+    padding:$padding1;
+    height: 400px;
+  }
+
+  .image_3 {
+    @extend %image_0;
+    padding:$padding3;
+  }
+
+  .image_2{
+    padding-top:50px;
+    height: 300px;
+    width: 350px;
+  }
+
+  .div2{
+
+    padding-top: 20px;
+    p::selection {
+                color: red;
+                background-color: yellow;
+            }
+    p{
+      font-size: 30px;
+      color:$color;
+    }
+  }
+
+  %h_0{
+    font-size: 30px;
+    font-family: sans-serif;
+    text-decoration:none !important;
+    padding-top: 100px;
+    background-color: #3cf24c;
+    border-radius: 40px;
+  }
+
+  .h_1 {
+    @extend %h_0;
+    padding:$padding1;
+  }
+
+  .h_2 {
+    @extend %h_0;
+    padding:$padding2;
+  }
+
+  .h_3 {
+    @extend %h_0;
+    padding:$padding3;
+  }
+
+  %div_3{
+    margin-top: 200px;
+
+    p{
+      font-size: 20px;
+      font-family: sans-serif;
+      text-align: center;
+      text-decoration:none;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      width: 100%;
+      height: 1px;
+    }
+    p>a{
+      color: $color3 !important;
+      text-decoration: none !important;
+    }
+  }
+
+  .div3 {
+    @extend %div_3;
+
+  }
+
+  .div4 {
+    @extend %div_3;
+    margin-top: 0px;
+    padding-bottom: 10px;
+  }
+
+  #tal{
+    div{
+      padding: 20px;
+      border: 2px solid black;
+      background-size:cover;
+    }
+  }
+
+  main .form-control
+  {
+      /* center form controls */
+      display: inline-block;
+
+      /* override Bootstrap's 100% width for form controls */
+      width: 600px;
+  }

@@ -1,0 +1,277 @@
+<!--{% extends "layout.html" %}
+ {% block head %}
+   <script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    document.querySelector('#submit').disabled = true;
+    document.querySelector('#newroom').onkeyup = () => {
+      if (document.querySelector('#newroom').value.length > 0 ){
+        document.querySelector('#submit').disabled = false;
+      }
+      else if(document.querySelector('#newroom').value.length === 0){
+        document.querySelector('#submit').disabled = true;
+      }
+    };
+    document.querySelector('#form').onsubmit=()=>{
+      newroom = document.querySelector('#newroom').value;
+      if (newroom.charAt(0)===".")
+      {
+        alert ("form error: dot can't be permitted.");
+        return false;
+      }
+    };
+
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    // When connected, configure buttons
+    socket.on('connect', () => {
+      document.querySelector('#form').onsubmit=()=>{
+        if (document.querySelector('#newroom').value.charAt(0)===".")
+        {
+          alert ("form error: dot can't be permitted.");
+          document.querySelector('#newroom').value = '';
+          return false;
+        }
+        const room=document.querySelector('#newroom').value;
+        socket.emit('check1', {'room':room});
+      };
+    });
+    socket.on('checked1',data => {
+      if(data.check === 0)
+      {
+        alert("roon exists");
+        return false;
+      }
+   });
+  });
+</script>
+
+  <title>Channels</title>
+   {% endblock %}
+
+  {% block body %}
+
+    <div class="container">
+        <h3>You could create a channel here </h3>
+        <form action="/channels" id = "form" method="post">
+        <input name="newroom" id="newroom" autocomplete="off" autofocus placeholder="newroom" type="text">
+        <input id = "submit" type="submit" >
+      </div>
+      </br>
+      <div>
+        <h3>Public rooms you could choose to chat with people </h3>
+          <ul>
+            {% for room in rooms %}
+              {% if room.public == "true" %}
+                <li > <a href="{{ url_for('channel', channel_name=room.channel) }}"> {{room.channel}}
+                    </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+    </div>
+    </br>
+
+      <h3>Private person you could choose to chat with </h3>
+      </br>
+
+      <ul>
+        {% for user in users %}
+        <li> <a href="{{ url_for('create_private', private_channel = "." + user0 + "&" + user.name) }}">username: {{user.name}}
+            </a></li>
+        {% endfor %}
+      </ul>
+  {% endblock %}-->
+
+
+
+
+
+
+  {% extends "layout.html" %}
+   {% block head %} <title>Index</title>{% endblock %}
+   {% block body %}
+
+        <div class="div1" >
+          <h2>content</h2>
+          <div class="container">
+            <ul>
+
+              <div class="row justify-content-center">
+                {% for i in range(content) %}
+                <div class="col-12 col-md-5">
+                  <li > <a href="#{{content[i]}}"> {{content[i][0]}}</a></li>
+                </div>
+                <div class="col-12 col-md-2">
+                  <li ><a href="#{{content[i]}}"> {{content[i][1]}</a></li>
+                </div>
+              </div>
+
+            <!-- Force next columns to break to new line at md breakpoint and up -->
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-5">
+                  <li ><a href="#fishes"> text_fishes</a></li>
+                </div>
+                <div class="col-12 col-md-2">
+                  <li ><a href="#fish"> image_fishes</a></li>
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-5">
+                  <li ><a href="#cats"> text_cats</a></li>
+                </div>
+                <div class="col-12 col-md-2">
+                  <li ><a href="#cat"> image_cats</a></li>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+
+        <div class="div2">
+          <div class="container">
+          <div class="row" >
+            <div class="col-12 col-md-8">
+              <p id="dogs" class="h_1">The domestic dog (Canis lupus familiaris when considered a subspecies of the wolf or Canis familiaris when considered a distinct species)[4] is a member of the genus Canis (canines), which forms part of the wolf-like canids,[5] and is the most widely abundant terrestrial carnivore.[6][7][8][9][10] The dog and the extant gray wolf are sister taxa[11][12][13] as modern wolves are not closely related to the wolves that were first domesticated,[12][13] which implies that the direct ancestor of the dog is extinct.[14] The dog was the first species to be domesticated[13][15] and has been selectively bred over millennia for various behaviors, sensory capabilities, and physical attributes.[16]</p>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="thumbnail">
+                <img id="dog" class="image_1" src="{{url_for('static', filename='img/dog.jpg')}}" />
+                <p ><a class="btn btn-primary navbar-btn" role="button" href="https://en.wikipedia.org/wiki/Dog">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" >
+            <div class="col-12 col-md-8">
+                <p id="fishes" class="h_2">Fish are gill-bearing aquatic craniate animals that lack limbs with digits. They form a sister group to the tunicates, together forming the olfactores. Included in this definition are the living hagfish, lampreys, and cartilaginous and bony fish as well as various extinct related groups. Tetrapods emerged within lobe-finned fishes, so cladistically they are fish as well. However, traditionally fish are rendered paraphyletic by excluding the tetrapods (i.e., the amphibians, reptiles, birds and mammals which all descended from within the same ancestry). Because in this manner the term "fish" is defined negatively as a paraphyletic group, it is not considered a formal taxonomic grouping in systematic biology, unless it is used in the cladistic sense, including tetrapods.[1][2] The traditional term pisces (also ichthyes) is considered a typological, but not a phylogenetic classification. </p>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <img id="fish" class="image_2" src="static/img/fish1.jpg" alt="fish"/>
+              <img id="fish" class="image_2" src="static/img/fish2.jpg" alt="fish"/>
+              <p ><a class="btn btn-primary navbar-btn" role="button" href="https://en.wikipedia.org/wiki/fish">Learn more</a></p>
+            </div>
+          </div>
+
+          <div class="row" >
+            <div class="col-12 col-md-8">
+              <p id="cats" class="h_3">Cats are similar in anatomy to the other felids, with a strong flexible body, quick reflexes, sharp retractable claws and teeth adapted to killing small prey. Cat senses fit a crepuscular and predatory ecological niche. Cats can hear sounds too faint or too high in frequency for human ears, such as those made by mice and other small animals.</p>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="thumbnail">
+                <img id="cat" class="image_3" src="static/img/cat.jpg" />
+                <p ><a class="btn btn-primary navbar-btn" role="button" href="https://en.wikipedia.org/wiki/cat">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+        </div>
+
+
+  {% endblock %}
+
+
+
+
+
+
+
+
+
+  {% extends "layout.html" %}
+   {% block head %}
+     <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelector('#submit').disabled = true;
+      document.querySelector('#newroom').onkeyup = () => {
+        if (document.querySelector('#newroom').value.length > 0 ){
+          document.querySelector('#submit').disabled = false;
+        }
+        else if(document.querySelector('#newroom').value.length === 0){
+          document.querySelector('#submit').disabled = true;
+        }
+      };
+      document.querySelector('#form').onsubmit=()=>{
+        newroom = document.querySelector('#newroom').value;
+        if (newroom.charAt(0)===".")
+        {
+          alert ("form error: dot can't be permitted.");
+          return false;
+        }
+      };
+
+      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+      // When connected, configure buttons
+      socket.on('connect', () => {
+        document.querySelector('#form').onsubmit=()=>{
+          if (document.querySelector('#newroom').value.charAt(0)===".")
+          {
+            alert ("form error: dot can't be permitted.");
+            document.querySelector('#newroom').value = '';
+            return false;
+          }
+          const room=document.querySelector('#newroom').value;
+          socket.emit('check1', {'room':room});
+        };
+      });
+      socket.on('checked1',data => {
+        if(data.check === 0)
+        {
+          alert("roon exists");
+          return false;
+        }
+     });
+     document.querySelector('.btn-group').onclick=()=>{
+       $('.dropdown-toggle').dropdown();
+
+     };
+    });
+  </script>
+  <br>
+    <title>Channels</title>
+     {% endblock %}
+
+    {% block body %}
+  </br>
+      <div class="container">
+          <h3>You could create a channel here </h3>
+          <form action="/channels" id = "form" method="post">
+          <input name="newroom" id="newroom" autocomplete="off" autofocus placeholder="newroom" type="text">
+          <input id = "submit" type="submit" >
+        </div>
+        </br>
+
+      <!-- Single button -->
+      <div class="row justify-content-center">
+        <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Public Room <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            {% for room in rooms %}
+              {% if room.public == "true" %}
+                <li > <a href="{{ url_for('channel', channel_name=room.channel) }}"> {{room.channel}}
+                    </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Private Room <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            {% for user in users %}
+            <li> <a href="{{ url_for('create_private', private_channel = "." + user0 + "&" + user.name) }}">username: {{user.name}}
+                </a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        </div>
+        {% endblock %}

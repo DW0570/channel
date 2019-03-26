@@ -1,0 +1,100 @@
+
+{% extends "layout.html" %}
+ {% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('#submit').disabled = true;
+      document.querySelector('#message').onkeyup=()=>{
+        if (document.querySelector('#message').value.length > 0){
+          document.querySelector('#submit').disabled = false;
+        }
+        else if (document.querySelector('#message').value.length === 0){
+          document.querySelector('#submit').disabled = true;
+        }
+    };
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    // When connected, configure buttons
+    socket.on('connect', () => {
+        document.querySelector('#form').onsubmit=()=>{
+          const message=document.querySelector('#message').value;
+          var channel = document.querySelector('title').innerHTML;
+            socket.emit('message', {'message':message, 'channel':channel});
+        };
+    });
+    socket.on('send_message',data=>{
+      var channel = document.querySelector('title').innerHTML;
+      if (data.channel === channel){
+        const list = document.createElement('div');
+        list.className='col-12 col-md-8';
+        list.innerHTML = data.message ;
+        document.querySelector('#lists').append(list);
+        var lis = document.querySelectorAll('#lists div');
+        var lists = document.querySelector('#lists');
+        var l = lists.getElementsByTagName("div").length;
+        if (l > 100) {
+          lis[0].parentNode.removeChild(lis[0]);
+        }
+      }
+   });
+  });
+
+  </script>
+  <title>{{channel_name}}</title>
+{% endblock %}
+
+{% block body %}
+<h3 id="h3_">{{channel_name}}</h3>
+
+</br>
+
+      {% for room in rooms %}
+        {% if room.channel == channel_name %}
+          {% if room.public == "true" %}
+            {% for message in room.messages %}
+            <div class="alert alert-success" >
+                <div class="row">
+                  <div class="col-3 col-md-4" >
+                    <table>
+                      <tr>
+                      <td>username: {{message.user.name}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-12 col-md-8">
+                    <table>
+                      <tr>
+                      <td  style=" font-size:25px">message: {{message.message}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-3 col-md-4">
+                      <table>
+                        <tr>
+                        <td>time: {{message.time}}</td>
+                        </tr>
+                      </table>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      <div class="alert alert-success" >
+    <div id="lists" class="row">
+
+  </div>
+</div>
+
+
+    <div class="container">
+      <form action="/channels/{{channel_name}}" id = "form" method="post">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">@</span>
+          <input name="message" id="message" type="text" class="form-control" autocomplete="off" autofocus placeholder="message" aria-describedby="basic-addon1">
+          <button id="submit" class="btn btn-default" type="submit">Go!</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
